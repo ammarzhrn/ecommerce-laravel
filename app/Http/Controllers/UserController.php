@@ -31,23 +31,17 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        if($request->input('password'))
-        {
-            $input['password'] = $input['password'];
-        }
-        $validasi = Validator::make($input, [
-            'name' => 'required|string|max:128',
+        $validasi = Validator::make($input,[
+            'name' => 'required|max:128|string',
             'level' => 'required',
-            'email' => 'required|email|unique:users,email|max:50',
-            'password' => 'required|min:8|max:30',
+            'email' => 'required|email|max:50|string|unique:users',
+            'password' => 'required|min:8|max:30'
         ]);
-        
         if($validasi->fails())
         {
             return back()->withErrors($validasi)->withInput();
         }
-
-        User::create($input)->with('success','Data berhasil ditambahkan');
+        User::create($input)->with('success', 'Data berhasil ditambahkan'); 
         return back();
     }
 
@@ -56,7 +50,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::find($id);
+        return view('user.detail', compact('user'));
     }
 
     /**
@@ -83,7 +78,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $users = Product::find($id);
+        $data = User::find($id);
         $data->delete();
         return back();
     }

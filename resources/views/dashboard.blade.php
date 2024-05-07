@@ -1,6 +1,6 @@
-@extends('template')
+@extends('layouts.template')
 
-@section('dashboard')
+@section('page-title')
     Dashboard
 @endsection
 

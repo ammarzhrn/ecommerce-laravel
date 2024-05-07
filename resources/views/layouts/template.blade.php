@@ -76,7 +76,12 @@
             <i class="fas fa-users mr-2"></i> Settings
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer text-danger">Logout</a>
+          <form method="POST" action="{{route('logout')}}">
+            @csrf
+            <a href="{{route('logout')}}" class="dropdown-item dropdown-footer text-danger" onclick="
+            event.preventDefault();
+            this.closest('form').submit();">Logout</a>
+          </form>
         </div>
       </li>
       <li class="nav-item">
@@ -221,7 +226,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">@yield('dashboard') @yield('user')</h1>
+            <h1 class="m-0">@yield('page-title')</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">

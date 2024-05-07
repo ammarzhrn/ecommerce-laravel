@@ -1,6 +1,6 @@
-@extends('template')
+@extends('layouts.template')
 
-@section('user')
+@section('page-title')
 User
 @endsection
 
@@ -54,17 +54,17 @@ User
                             <td>{{$user->email}}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default">Action</button>
                                     <button type="button" class="btn btn-default dropdown-toggle dropdown-icon"
                                         data-toggle="dropdown" aria-expanded="false">
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu" role="menu" style="">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Separated link</a>
+                                        <a class="dropdown-item" href="penjual/{{$user->id}}">Detail</a>
+                                        <form action="{{route('penjual.destroy', $user->id)}}" method="post">
+                                            @csrf
+                                            {{method_field('DELETE')}}
+                                            <button type="submit" onclick="return confirm('Hapus data ini?')" class="text-danger dropdown-item">Hapus</button>
+                                        </form>
                                     </div>
                                 </div>
                             </td>
