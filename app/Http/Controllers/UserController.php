@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Arr;
+use Illuminate\Support\Arr;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $users = User::all();
@@ -70,6 +75,21 @@ class UserController extends Controller
     {
         $data = $request->all();
         $users = User::find($id);
+        $validasi = Validator::make($data,[
+            'name' => 'required|max:128|string',
+            'level' => 'required',
+            'email' => 'required|email|max:50|string'
+        ]);
+        if($validasi->fails())
+        {
+            return back()->withErrors($validasi)->withInput();
+        }
+        if($request->input('password'))
+        {
+            $data['password'] = $data['password'];
+        }else{
+            $data = Arr::except($data, ['password']);
+        }
         $users->update($data);
         return redirect('/penjual');
     }

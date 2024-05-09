@@ -5,6 +5,17 @@
 @endsection
 
 @section('content')
+
+@if($errors->any())
+<div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+    @foreach($errors->all() as $error)
+        <li>{{$error}}</li>
+    @endforeach
+  </div>
+@endif
+
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="card">
@@ -45,8 +56,9 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="{{route('penjual.store')}}" method="post">
+                    <form action="{{route('penjual.update', $user->id)}}" method="post">
                         @csrf
+                        {{method_field('PUT')}}
                         <div class="form-group">
                             <label>Nama Lengkap Penjual</label>
                             <input type="text" name="name" value="{{$user->name}}" required class="form-control">
@@ -54,12 +66,12 @@
                         <div class="form-group">
                             <label>Alamat Email</label>
                             <input type="email" name="email" value="{{$user->email}}" required class="form-control">
-                            <input type="text" name="level" hidden value="penjual">
                         </div>
+                        <input type="text" name="level" hidden value="{{$user->level}}">
+
                         <div class="form-group">
-                            <label>Katasandi</label>
-                            <input type="password" name="password" required class="form-control"
-                                placeholder="Minimal 8 karakter, A-Z, a-z dan simbol">
+                            <label for="">Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Minimal 8 Karakter">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
