@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BiodataController;
+use App\Http\Controllers\TokoController;
 
 Route::get('/', function () {
     return view('auth/register');
@@ -21,8 +22,8 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::resource('penjual', UserController::class);
-
 Route::resource('biodata', BiodataController::class);
+Route::resource('toko', TokoController::class);
 
 
 

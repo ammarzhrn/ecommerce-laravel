@@ -48,6 +48,7 @@ User
                     <tbody>
 
                         @foreach ($users as $user)
+                        @if($user->level === 'seller')
                         <tr>
                             <td>{{$user->name}}</td>
                             <td>{{$user->email}}</td>
@@ -67,6 +68,7 @@ User
                                     </div>
                                 </div>
                             </td>
+                            @endif
                             @endforeach
 
                     </tbody>

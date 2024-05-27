@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Model\User;
+use App\Models\User;
 
 class Toko extends Model
 {
@@ -13,7 +13,7 @@ class Toko extends Model
     protected $table = 'toko';
     protected $guarded = [];
 
-    public function  user() {
+    public function user() {
         return $this->belongsTo(User::class,  "id_user");
     }
 }

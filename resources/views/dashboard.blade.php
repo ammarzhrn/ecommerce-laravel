@@ -141,6 +141,40 @@ Dashboard
     <!-- /.modal-dialog -->
 </div>
 
+@else
+{{--Jika User Melengkapi Data--}}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card-body table-responsive">
+      <table class="table table-bordered table-striped">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>level</th>
+                  <th>Tanggal Lahir</th>
+                  <th>Alamat</th>
+                  <th>Jenis Kelamin</th>
+              </tr>
+          </thead>
+
+          <tbody>
+              @foreach ($user_profile as $data)
+              <tr>
+                  <td>{{$data->user->name}}</td>
+                  <td>{{$data->user->email}}</td>
+                  <td>{{$data->user->level}}</td>
+                  <td>{{$data->tgl_lahir}}</td>
+                  <td>{{$data->alamat}}</td>
+                  <td>{{$data->jenis_kelamin}}</td>
+                  @endforeach
+          </tbody>
+          </tr>
+      </table>
+  </div>
+  </div>
+</div>
+
 @endif
 @endif
 

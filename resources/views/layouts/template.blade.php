@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard 2</title>
 
+
+  
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -18,6 +20,7 @@
   <link rel="stylesheet" href="{{asset('template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('template/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{{asset('template/plugins/summernote/summernote-bs4.min.css')}}}">
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -302,6 +305,9 @@
 <!-- ChartJS -->
 <script src="{{asset('template/plugins/chart.js/Chart.min.js' )}}"></script>
 
+<!-- Summernote -->
+<script src="{{{asset('template/plugins/summernote/summernote-bs4.min.js')}}}"></script>
+
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('template/dist/js/demo.js' )}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -309,6 +315,8 @@
 
 <script>
   $(function () {
+    // Summernote
+    $('#summernote').summernote()
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]

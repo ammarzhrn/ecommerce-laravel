@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up(): voi
     {
         Schema::create('toko', function (Blueprint $table) {
             $table->increments('id');
@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('nama_toko');
             $table->enum('kategori_toko', ['elektronik', 'otomotif', 'sembako', 'fashion', 'makanan', 'obat', 'aksesoris', 'perabotan']);
             $table->text('desc_toko');
-            $table->date('hari_buka');
-            $table->date('hari_libur');
+            $table->string('hari_buka');
             $table->time('jam_buka');
             $table->time('jam_libur');
             $table->boolean('aktif')->default('0');
