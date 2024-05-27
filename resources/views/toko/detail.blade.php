@@ -84,89 +84,64 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form action="{{route('toko.update', $data->id)}}" method="post">
+                    <form action="{{ route('toko.update', $data->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        {{method_field('PUT')}}
+                        @method('PUT')
                         <div class="form-group">
                             <label for="image">Image</label>
                             <input type="file" name="icon_toko" id="image" class="form-control">
                             @if($data->icon_toko)
-                                <img src="{{asset('storage/image/toko/'.$data->icon_toko)}}" alt="" class="img-thumbnail mt-2" width="150">
+                                <img src="{{ asset('storage/image/toko/' . $data->icon_toko) }}" alt="" class="img-thumbnail mt-2" width="150">
                             @endif
                         </div>
                         <div class="form-group">
                             <label>Nama Toko</label>
-                            <input type="text" name="nama_toko" value="{{$data->nama_toko}}" required class="form-control">
+                            <input type="text" name="nama_toko" value="{{ $data->nama_toko }}" required class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Kategori</label>
-                            <select class="form-control" name="kategori_toko" value="{{$data->ketagori_toko}}" id="">
-                                <option value="elektronik">Elektronik</option>
-                                <option value="otomotif">otomotif</option>
-                                <option value="sembako">Sembako</option>
-                                <option value="fashion">Fashion</option>
-                                <option value="makanan">Makanan</option>
-                                <option value="obat">Obat</option>
-                                <option value="aksesoris">Aksesoris</option>
-                                <option value="perabotan">Perabotan</option>
+                            <select class="form-control" name="kategori_toko">
+                                <option value="elektronik" {{ $data->kategori_toko == 'elektronik' ? 'selected' : '' }}>Elektronik</option>
+                                <option value="otomotif" {{ $data->kategori_toko == 'otomotif' ? 'selected' : '' }}>Otomotif</option>
+                                <option value="sembako" {{ $data->kategori_toko == 'sembako' ? 'selected' : '' }}>Sembako</option>
+                                <option value="fashion" {{ $data->kategori_toko == 'fashion' ? 'selected' : '' }}>Fashion</option>
+                                <option value="makanan" {{ $data->kategori_toko == 'makanan' ? 'selected' : '' }}>Makanan</option>
+                                <option value="obat" {{ $data->kategori_toko == 'obat' ? 'selected' : '' }}>Obat</option>
+                                <option value="aksesoris" {{ $data->kategori_toko == 'aksesoris' ? 'selected' : '' }}>Aksesoris</option>
+                                <option value="perabotan" {{ $data->kategori_toko == 'perabotan' ? 'selected' : '' }}>Perabotan</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="">Deskripsi Toko</label>
-                            <textarea id="summernote" name="desc_toko">{!! $data->desc_toko !!}</textarea>
+                            <label for="">Hari Buka : </label>
+                            @php
+                                $hari_buka = explode(',', $data->hari_buka);
+                            @endphp
+                            @foreach(['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu'] as $hari)
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" name="hari_buka[]" id="{{ $hari }}" value="{{ $hari }}" {{ in_array($hari, $hari_buka) ? 'checked' : '' }}>
+                                    <label for="{{ $hari }}" class="custom-control-label">{{ ucfirst($hari) }}</label>
+                                </div>
+                            @endforeach
                         </div>
                         <div class="form-group">
-                            <label for="">Hari Buka : </label>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" name="hari_buka[]" id="senin"
-                                    value="senin">
-                                <label for="senin" class="custom-control-label">Senin</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" name="hari_buka[]" id="selasa"
-                                    value="selasa">
-                                <label for="selasa" class="custom-control-label">Selasa</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" name="hari_buka[]" id="rabu"
-                                    value="rabu">
-                                <label for="rabu" class="custom-control-label">Rabu</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" name="hari_buka[]" id="kamis"
-                                    value="kamis">
-                                <label for="kamis" class="custom-control-label">Kamis</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" name="hari_buka[]" id="jumat"
-                                    value="jumat">
-                                <label for="jumat" class="custom-control-label">Jumat</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" name="hari_buka[]" id="sabtu"
-                                    value="sabtu">
-                                <label for="sabtu" class="custom-control-label">Sabtu</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" name="hari_buka[]" id="minggu"
-                                    value="minggu">
-                                <label for="minggu" class="custom-control-label">Minggu</label>
-                            </div>
+                            <label for="">Deskripsi Toko</label>
+                            <textarea id="summernote" name="desc_toko" class="form-control">{!! $data->desc_toko !!}</textarea>
                         </div>
-                        <div class="row justify-between">
+                        <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="jam_buka">Jam Buka</label>
-                                <input type="time" name="jam_buka" value="{{$data->jam_buka}}" class="form-control">
+                                <input type="time" name="jam_buka" value="{{ $data->jam_buka }}" class="form-control">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="jam_tutup">Jam Tutup</label>
-                                <input type="time" name="jam_libur" value="{{$data->jam_libur}}" class="form-control">
+                                <label for="jam_libur">Jam Tutup</label>
+                                <input type="time" name="jam_libur" value="{{ $data->jam_libur }}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <select name="aktif" class="form-control" required id="">
-                                <option value="0">Tidak Aktif</option>
-                                <option value="2">Aktif</option>
+                            <label>Status</label>
+                            <select name="aktif" class="form-control" required>
+                                <option value="0" {{ $data->aktif == 0 ? 'selected' : '' }}>Tidak Aktif</option>
+                                <option value="2" {{ $data->aktif == 2 ? 'selected' : '' }}>Aktif</option>
                             </select>
                         </div>
                         <div class="form-group">

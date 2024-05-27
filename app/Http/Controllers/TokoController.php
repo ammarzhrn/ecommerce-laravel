@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class TokoController extends Controller
 {
@@ -86,9 +88,41 @@ class TokoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Toko $toko)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_toko' => '',
+            'kategori_toko' => '',
+            'desc_toko' => '',
+            'icon_toko' => '',
+            'jam_buka' => '',
+            'jam_libur' => '',
+            'aktif' => '',
+            'hari_buka' => '',
+        ]);
+
+        $toko = Toko::findOrFail($id);
+        $toko->nama_toko = $request->nama_toko;
+        $toko->kategori_toko = $request->kategori_toko;
+        $toko->desc_toko = $request->desc_toko;
+        $toko->jam_buka = $request->jam_buka;
+        $toko->jam_libur = $request->jam_libur;
+        $toko->aktif = $request->aktif;
+        $toko->hari_buka = implode(',', $request->hari_buka); // Menyimpan hari_buka sebagai string
+
+        if ($request->hasFile('icon_toko')) {
+            // Hapus gambar lama jika ada
+            if ($toko->icon_toko) {
+                Storage::delete('public/image/toko/' . $toko->icon_toko);
+            }
+            // Simpan gambar baru
+            $imagePath = $request->file('icon_toko')->store('public/image/toko');
+            $toko->icon_toko = basename($imagePath);
+        }
+
+        $toko->save();
+
+        return redirect()->route('toko.index', $toko->id)->with('success', 'Toko updated successfully');
     }
 
     /**
